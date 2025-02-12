@@ -1,14 +1,26 @@
 package middlewares
 
 import (
-    "net/http"
+	"log"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
-func MyMiddleware() gin.HandlerFunc {
-    return func(c *gin.Context) {
-        // Lógica del middleware
-        c.Next()
-    }
+func MiddlewareV1() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Lógica del middleware
+		log.Println("Executing middleware V1")
+		log.Println(c.Request.Header.Get("token"))
+		c.Next()
+	}
+}
+
+func MiddlewareV2() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Lógica del middleware
+
+		log.Println("Executing middleware V2")
+		log.Println(c.Request.Header.Get("token"))
+		c.Next()
+	}
 }
