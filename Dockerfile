@@ -17,6 +17,7 @@ FROM alpine as runtime
 WORKDIR /
 
 COPY --from=builder /app/mygoapp /mygoapp
+COPY --from=builder /app/public /public
 
 # Configuramos los permisos para que el ejecutable pueda ejecutarse
 RUN chmod +x /mygoapp
