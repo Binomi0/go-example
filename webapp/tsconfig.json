@@ -2,14 +2,13 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "sourceMap": true,
-    "outDir": "../public/js", // Optional: specify the output directory
+    "sourceMap": false,
+    "outDir": "tmp",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react"
   },
-  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

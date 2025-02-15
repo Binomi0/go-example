@@ -6,65 +6,7 @@
   <title>Login</title>
 </head>
 <body>
-  <h1>Welcome to the Login Page v1</h1>
-  <form id="myForm">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" /><br /><br />
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" /><br /><br />
-    <button type="submit">Login</button>
-  </form>
-
   <div id="root"></div>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("script loaded");
-      // Agregar listener al formulario para el evento submit
-      document.getElementById("myForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
-
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-
-        // Validar datos
-        if (!username || !password) {
-          console.error("Username and password are required.");
-          return; // Salir si los campos están vacíos
-        }
-
-        // Aquí puedes enviar los datos al servidor usando AJAX o formularios de JavaScript
-        console.log("Username:", username);
-        console.log("Password:", password);
-
-        fetch('/api/v1/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Server response:", data);
-          // Aquí puedes manejar la respuesta del servidor según sea necesario
-        })
-        .catch(error => {
-          console.error("Error sending request:", error);
-        });
-
-        // Ejemplo de envío con XMLHttpRequest
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", "login", true);
-        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // xhr.onreadystatechange = function () {
-        //   if (xhr.readyState === 4 && xhr.status === 200) {
-        //     console.log("Response from server:", xhr.responseText);
-        //   }
-        // };
-        // xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
-      });
-    });
-  </script>
-  <script src="/public/js/index.js"></script>
+  <script src="/public/js/bundle.js"></script>
 </head>
 </html>
