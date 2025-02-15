@@ -1,0 +1,32 @@
+# Ignore all .go files in the src directory
+**/*.go
+
+node_modules/
+*.map
+
+# Ignore the Dockerfile, docker-compose.yml, and Dockerignore files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore generated files by tools like Go modules
+go.mod
+go.sum
+
+# Ignore temporary build directories
+build/
+dist/
+
+# Ignore any log files or cache files
+*.log
+*.cache
+
+# Ignore environment variables stored in .env file
+.env
+
+# Ignore any test results
+test-results/
+
+# Ignore any other unnecessary files
+mygoapp
+
