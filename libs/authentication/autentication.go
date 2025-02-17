@@ -40,16 +40,18 @@ func AuthMiddleware() gin.HandlerFunc {
 		tokenString, err := c.Cookie("jwt")
 
 		if err != nil {
-			c.Redirect(301, "/login")
+			c.Redirect(http.StatusTemporaryRedirect, "login")
 			// c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			// c.Abort()
 			return
 		}
 
 		if tokenString == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token requerido"})
-			c.Abort()
-			c.Redirect(401, "login")
+			c.Redirect(http.StatusFound, "/login")
+
+			// c.JSON(http.StatusUnauthorized, gin.H{"error": "Token requerido"})
+			// c.Abort()
+			// c.Redirect(401, "login")
 			return
 		}
 
@@ -59,9 +61,12 @@ func AuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
-			c.Abort()
-			c.Redirect(401, "/login")
+			c.SetCookie("token", "", -1, "/", "", true, false)
+			c.Redirect(http.StatusFound, "/login")
+
+			// c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
+			// c.Abort()
+			// c.Redirect(401, "login")
 			return
 		}
 
