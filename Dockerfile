@@ -18,6 +18,7 @@ WORKDIR /
 
 COPY --from=builder /app/mygoapp /mygoapp
 COPY --from=builder /app/public /public
+COPY --from=builder /app/templates /templates
 
 # Configuramos los permisos para que el ejecutable pueda ejecutarse
 RUN chmod +x /mygoapp

@@ -1,5 +1,6 @@
 services:
   mygoapp:
     build: .
+    container_name: mygoapp
     ports:
       - "8080:8080"
