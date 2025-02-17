@@ -1,6 +1,7 @@
 package authentication
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -39,16 +40,16 @@ func AuthMiddleware() gin.HandlerFunc {
 		tokenString, err := c.Cookie("jwt")
 
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			c.Abort()
-			c.Redirect(401, "api/v1/login")
+			c.Redirect(301, "/login")
+			// c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			// c.Abort()
 			return
 		}
 
 		if tokenString == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token requerido"})
 			c.Abort()
-			c.Redirect(401, "api/v1/login")
+			c.Redirect(401, "login")
 			return
 		}
 
@@ -60,12 +61,13 @@ func AuthMiddleware() gin.HandlerFunc {
 		if err != nil || !token.Valid {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
 			c.Abort()
-			c.Redirect(401, "api/v1/login")
+			c.Redirect(401, "/login")
 			return
 		}
 
 		// Guardar los claims en el contexto para su uso en los handlers
 		c.Set("username", claims.Username)
+		log.Println(("Autenticación exitosa"))
 		c.Next()
 	}
 }

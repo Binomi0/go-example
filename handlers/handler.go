@@ -13,11 +13,16 @@ func GetHello(c *gin.Context) {
 }
 
 func GetHome(c *gin.Context) {
-	c.File("./public/index.html")
+	username := c.GetString("username")
+	if username == "" {
+		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Login", "id": "login"})
+	} else {
+		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Home", "id": "root"})
+		// c.File("./public/index.html")
+	}
 }
 
 func Login(c *gin.Context) {
-
 	// Lógica para manejar la subida de un formulario
 	var loginData struct {
 		Username string `json:"username"`
@@ -52,5 +57,5 @@ func Login(c *gin.Context) {
 		true,                        // Accesible solo por HTTP (HttpOnly, no por JavaScript)
 	)
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{})
 }

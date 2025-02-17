@@ -1,9 +1,17 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import LoginForm from "./components/LoginForm";
 
 const app = document.getElementById("root");
-if (!app) throw new Error("No root element found");
+const login = document.getElementById("login");
+
+if (!app && !login) throw new Error("No root element found");
 // Render your React component instead
-const root = createRoot(app);
-root.render(<App />);
+if (app) {
+  const root = createRoot(app);
+  root.render(<App />);
+} else if (login) {
+  const root = createRoot(login);
+  root.render(<LoginForm />);
+}

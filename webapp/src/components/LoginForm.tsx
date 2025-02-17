@@ -16,7 +16,7 @@ const LoginForm = () => {
       return; // Salir si los campos están vacíos
     }
 
-    fetch("/api/v1/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const LoginForm = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Server response:", data);
-        // Aquí puedes manejar la respuesta del servidor según sea necesario
+        window.location.href = "/";
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -34,17 +34,32 @@ const LoginForm = () => {
   };
 
   return (
-    <form id="myForm" onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input ref={usernameRef} type="text" id="username" name="username" />
-      <br />
-      <br />
-      <label htmlFor="password">Password:</label>
-      <input ref={passwordRef} type="password" id="password" name="password" />
-      <br />
-      <br />
-      <button type="submit">Login</button>
-    </form>
+    <div>
+      <h1>Welcome to the Login Page v2</h1>
+      <form id="myForm" onSubmit={handleSubmit}>
+        <label htmlFor="username">Username:</label>
+        <input
+          autoComplete="webauthn-username"
+          ref={usernameRef}
+          type="text"
+          id="username"
+          name="username"
+        />
+        <br />
+        <br />
+        <label htmlFor="password">Password:</label>
+        <input
+          autoComplete="webauthn-password"
+          ref={passwordRef}
+          type="password"
+          id="password"
+          name="password"
+        />
+        <br />
+        <br />
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 };
 

@@ -1,13 +1,9 @@
-import React, { FormEvent, useRef } from "react";
-import LoginForm from "./components/LoginForm";
+import React from "react";
 
-const App = () => {
-  return (
-    <div>
-      <h1>Welcome to the Login Page v2</h1>
-      <LoginForm />
-    </div>
-  );
-};
+const App = () => (
+  <div>
+    <h1>Logged In Successfully!</h1>
+  </div>
+);
 
 export default App;

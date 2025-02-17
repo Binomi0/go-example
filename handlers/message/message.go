@@ -24,6 +24,9 @@ type TikTokChatMessage struct {
 
 func GetMessages(c *gin.Context) {
 	items := c.Query("items")
+	if items == "" {
+		items = "50"
+	}
 	// Convertir items a un número entero usando strconv.Atoi
 	num, err := strconv.Atoi(items)
 	if err != nil {
