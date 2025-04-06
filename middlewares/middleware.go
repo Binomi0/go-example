@@ -25,7 +25,7 @@ func MiddlewareV1() gin.HandlerFunc {
 		secureHeaders(c)
 
 		log.Println("Executing middleware V1")
-		log.Println(c.Request.Header.Get("token"))
+		log.Println(c.Request.Header.Get("jwt"))
 		c.Next()
 	}
 }
@@ -36,7 +36,7 @@ func MiddlewareV2() gin.HandlerFunc {
 		secureHeaders(c)
 
 		log.Println("Executing middleware V2")
-		log.Println(c.Request.Header.Get("token"))
+		log.Println(c.Request.Header.Get("jwt"))
 		c.Next()
 	}
 }

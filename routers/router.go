@@ -10,13 +10,18 @@ import (
 )
 
 func SetupRouter() *gin.Engine {
+	// gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
+	r.StaticFile("favicon.ico", "frontend/public/favicon.ico")
+	r.Static("/assets", "frontend/public")
+	r.SetTrustedProxies(nil)
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/public", "./public")
 
 	app := r.Group("/")
 	{
 		app.GET("/", authentication.AuthMiddleware(), handlers.GetHome)
+		app.GET("/home", handlers.GetLanding)
 		app.GET("/login", handlers.GetHome)
 		app.POST("/login", handlers.Login)
 	}

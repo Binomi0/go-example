@@ -1,23 +1,75 @@
 package handlers
 
 import (
+	"fmt"
+	"log"
+	"math/rand"
 	"mygoapp/libs/authentication"
+	"mygoapp/models"
+
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	gossr "github.com/natewong1313/go-react-ssr"
 )
+
+var APP_ENV string
 
 func GetHello(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
 }
 
+var engine *gossr.Engine
+
+func getSsrEngine() {
+	if engine != nil {
+		return
+	}
+	newEngine, err := gossr.New(gossr.Config{
+		AppEnv:             "development",
+		AssetRoute:         "/assets",
+		FrontendDir:        "frontend/src",
+		GeneratedTypesPath: "frontend/src/generated.d.ts",
+		TailwindConfigPath: "frontend/tailwind.config.js",
+		LayoutCSSFilePath:  "index.css",
+		PropsStructsPath:   "./models/props.go",
+	})
+
+	if err != nil {
+		engine = nil
+		log.Fatal("Failed to init go-react-ssr")
+	}
+
+	engine = newEngine
+}
+
+func GetLanding(c *gin.Context) {
+	fmt.Printf("APP_ENV: %s\n", APP_ENV)
+	if engine == nil {
+		getSsrEngine()
+	}
+
+	c.Writer.Write(engine.RenderRoute(gossr.RenderConfig{
+		File:  "App.tsx",
+		Title: "Gin example app",
+		MetaTags: map[string]string{
+			"og:title":    "Gin example app",
+			"description": "Hello world!",
+		},
+		Props: &models.IndexRouteProps{
+			InitialCount: rand.Intn(100),
+		},
+	}))
+}
+
 func GetHome(c *gin.Context) {
 	username := c.GetString("username")
+	println(username)
 	if username == "" {
 		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Login", "id": "login"})
 	} else {
-		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Home", "id": "root"})
+		c.HTML(http.StatusOK, "index.html", gin.H{"title": "Home", "id": "root", "username": username})
 		// c.File("./public/index.html")
 	}
 }
